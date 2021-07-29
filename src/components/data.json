@@ -1,0 +1,42 @@
+﻿[
+  {
+    "name": "server/api/admin.js/router.post",
+    "content": "router.post('/books/add', async (req, res) => { \n try { \nconst book = await Book.add(Object.assign({ userId: req.user.id }, req.body));\nres.json(book);\n} catch (err) {\nlogger.error(err);\nres.json({ error: err.message || err.toString() });\n}\n})"
+  },
+  {
+    "name": "server/api/admin.js/router.use",
+    "content": "router.use((req, res, next) => {\nif (!req.user || !req.user.isAdmin) {\nres.status(401).json({ error: 'Unauthorized' }\n);\nreturn;\n}\n\nnext();\n});"
+  },
+  {
+    "name": "server/api/public.js/router.get",
+    "content": "router.get('/books', async (req, res) => {\ntry {\nconst books = await Book.list();\n res.json(books);\n} catch (err) {\nres.json({ error: err.message || err.toString() });\n}\n});"
+  },
+  {
+    "name": "api/server.js/Promise.fromNode.then",
+    "content": "// Start listening \nPromise.fromNode(cb => {\napi.listen(config.LANDO_API_PORT, cb);\n})\n// Load our routes\n.then(() => {\nfs.readdirSync(path.join(__dirname, 'routes')).map(file => {\nrequire(`./routes/${file}`)(api, handler, {config, slack});\nlog.info('Loaded route %s', file);\n});\nlog.info('Listening on port: %s', config.LANDO_API_PORT);\n});"
+  },
+  {
+    "name": "server/routes/client.js/router.post",
+    "content": "router.post('/torrents/delete', (req, res) => {\nconst {deleteData, hash: hashes} = req.body;\nconst callback = ajaxUtil.getResponseFn(res);\n\nreq.services.clientGatewayService\n.removeTorrents({hashes, deleteData})\n.then(callback)\n.catch(err => {\ncallback(null, err);\n});\n});"
+  },
+  {
+    "name": "core/DevServer.js/app.use",
+    "content": "app.use(serveStatic(path.join(__dirname, '../playground'), { \nlastModified: false,\netag: false,\nsetHeaders: (res, url) => {\nif (url.indexOf('/index.html') !== -1) {\nres.setHeader('Cache-Control', 'no-cache');\n}\n}\n}));"
+  },
+  {
+    "name": "app/routes/index.js/router.get",
+    "content": "// Rooms\nrouter.get('/rooms', [User.isAuthenticated, function(req, res, next) {\nRoom.find(function(err, rooms){\nif(err) throw err;\nres.render('rooms', { rooms });\n});\n}]);"
+  },
+  {
+    "name": "metrics/server.js/Promise.fromNode.then",
+    "content": "/ Main logix \nPromise.fromNode(cb => {\napi.listen(config.LANDO_METRICS_PORT, cb);\n})\n.then(() => {\nlog.info('Listening on port: %s', config.LANDO_METRICS_PORT);\n});"
+  },
+  {
+    "name": "server/api/admin.js/router.get",
+    "content": "router.get('/books/detail/:slug', async (req, res) => { \ntry {\nconst book = await Book.getBySlug({ slug: req.params.slug });\nres.json(book);\n} catch (err) {\nres.json({ error: err.message || err.toString() });\n}\n});"
+  },
+  {
+    "name": "src/app-custom.js/app.get",
+    "content": "// Basic HTTP response \napp.get('/', (req, res) => {\nres.header('Content-type', 'text/html');\nreturn res.end('<h1>DANCING DANCING STARLIGHT</h1>');\n});"
+  }
+]

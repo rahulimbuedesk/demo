@@ -1,0 +1,14 @@
+/* normal card css*/
+.normal-card{
+    width: 200px;
+    height:200px;
+    display: grid;
+    place-items: end center ;
+    margin: 10px;
+    }
+.normal-card h1{
+    font-size: 18px;
+    color:var(--fg);
+    padding: 5px;
+    text-align: center;
+    }
